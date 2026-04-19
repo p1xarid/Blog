@@ -1,0 +1,74 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<title>Profile Settings</title>
+<link rel="stylesheet" href="{% static 'profile/portfolio_settings.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="settings-wrapper mt-5 mb-5">
+    <div class="settings-card">
+        <div class="settings-header">
+            <h2>Profile Settings</h2>
+            <p class="text-muted">Manage your profile information and preferences</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 settings-left">
+
+                <h2 class="text-dark">Account Info:</h2>
+                <div class="info-box">
+                    <p><strong><i class="fa-regular fa-user"></i> Username:</strong> {{ user.username }} </p>
+                    <p><strong><i class="fa-regular fa-envelope"></i> Email:</strong> {{ user.email }} </p>
+                    <p><strong><i class="fa-solid fa-lock"></i> Password:</strong> •••••••• </p>
+                    <p><strong><i class="fa-regular fa-calendar"></i> Joined:</strong> {{user.date_joined|date:"d.m.Y"}}
+                    </p>
+                </div>
+
+                <h3 class="mt-4 text-dark">About:</h3>
+                <form method="post" class="mb-3">
+                    {% csrf_token %}
+                    <textarea name="bio" class="form-control custom-input bio-textarea"
+                        placeholder="Tell something about yourself...">{{ portfolio.bio|default:'' }}</textarea>
+
+                    <button type="submit" name="update_bio" class="btn save-btn mt-2">
+                        Save Bio
+                    </button>
+                </form>
+
+
+                <a href="{% url 'portfolio_update' %}" class="btn btn-outline-light mt-4 w-100">
+                    Account Settings
+                </a>
+
+            </div>
+
+            <div class="col-md-4 text-center settings-right">
+
+                <div class="avatar-box">
+                    <img src="{{ portfolio.avatar_url }}" class="avatar-img">
+
+                    <h5>{{ user.username }}</h5>
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <label class="btn btn-outline-light btn-sm mt-2">
+                            Change Photo
+                            <input type="file" name="avatar" hidden onchange="this.form.submit()">
+                        </label>
+
+                        <button type="submit" name="reset_avatar" class="btn btn-outline-danger btn-sm mt-2">
+                            Reset
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

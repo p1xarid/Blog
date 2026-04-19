@@ -1,0 +1,52 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'profile/portfolio_update.css' %}">
+<title>Profile Settings</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="portfolio-container">
+    <h2 class="text-center">Update Profile</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <h5><i class="fa-solid fa-user"></i> Username:</h5>
+        {{ username_form.username }}
+        {{ username_form.errors }}
+        <button name="update_username" class="btn btn-update mt-2 mb-4">
+            Update Username
+        </button>
+    </form>
+
+    <form method="post">
+        {% csrf_token %}
+        <h5><i class="fa-solid fa-at"></i> Email:</h6>
+            {{ email_form.email }}
+            {{ email_form.errors }}
+            <button name="update_email" class="btn btn-update mt-2 mb-4">
+                Update Email
+            </button>
+    </form>
+
+    <form method="post">
+        {% csrf_token %}
+        <h5><i class="fa-solid fa-lock"></i> Password:</h6>
+
+            <p>Password {{ password_form.current_password }}</p>
+            <p>New Password {{ password_form.new_password }}</p>
+            <p>Confirm Password {{ password_form.confirm_password }}</p>
+
+            {{ password_form.errors }}
+
+            <button name="update_password" class="btn btn-update mt-2">
+                Update Password
+            </button>
+    </form>
+
+    <a class="btn-back btn" href="{% url 'portfolio_settings' %}">
+        Back to Settings
+    </a>
+</div>
+{% endblock %}

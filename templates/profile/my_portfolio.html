@@ -1,0 +1,52 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<title>{{ portfolio.user.username }}'s Portfolio</title>
+<link rel="stylesheet" href="{% static 'profile/my_portfolio.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}
+
+
+{% block content %}
+<div class="card-body container mt-4 rounded-3 p-4">
+    <h1 class="text-center text-white">Portfolio</h1>
+    <div style="display:flex; align-items:center; gap:30px; margin-top:20px;">
+        <img src="{{ portfolio.avatar_url }}" class="avatar" alt="Avatar">
+
+        <div style="color:white;">
+            <h2>{{ portfolio.user.username }}</h2>
+
+            <p class="text-white" style="opacity:0.6;">
+                {{ portfolio.bio|default:"No bio yet..." }}
+            </p>
+
+            <div style="opacity:0.8;">
+                <i class="fa-solid fa-envelope"></i> {{ portfolio.user.email|default:"No email" }}
+            </div>
+
+            <div style="opacity:0.8;">
+                <i class="fa-regular fa-calendar-days"></i> Joined: {{ portfolio.user.date_joined|date:"M d, Y" }}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<h1 class="text-center text-white mt-5">Recent Posts</h1>
+
+<div class=" mt-4">
+    {% for post in posts %}
+    <div class="post-card mb-3">
+        <h1 class="post-title">{{ post.title }}</h1>
+        <p class="post-content">{{ post.content }}</p>
+        <div class="post-meta">
+            <span>Published on {{ post.created_at|date:"M d, Y" }}</span>
+            <span>Status: {{ post.get_status_display }}</span>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-center text-white">No posts yet...</p>
+    {% endfor %}
+</div>
+{% endblock %}

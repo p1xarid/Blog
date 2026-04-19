@@ -1,0 +1,99 @@
+body {
+    background: linear-gradient(135deg, #5e4f83, #180a47);
+}
+
+.settings-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+
+.settings-card {
+    width: 100%;
+    max-width: 1000px;
+    padding: 40px;
+
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        0 0 80px rgba(102, 126, 234, 0.3);
+    color: white;
+    transition: 0.3s;
+}
+
+.settings-card:hover {
+    transform: translateY(-10px) scale(1.01);
+}
+
+
+.settings-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.settings-header h2 {
+    font-weight: 700;
+}
+
+
+.custom-input {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: white;
+    border-radius: 12px;
+}
+
+.custom-input:focus {
+    box-shadow: 0 0 15px rgba(102, 126, 234, 0.8);
+}
+
+
+.save-btn {
+    background: linear-gradient(135deg, #8b5cf6, #6366f1);
+    border: none;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(139, 92, 246, 0.5);
+}
+
+
+.custom-list .list-group-item {
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    color: white;
+    margin-bottom: 8px;
+    border-radius: 10px;
+}
+
+
+.avatar-box {
+    padding: 20px;
+}
+
+.avatar-img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 10px;
+}
+
+.bio-textarea {
+    height: 100px;
+    max-height: 150px;
+    resize: none;
+}
