@@ -1,0 +1,74 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    font: 200 1rem 'Courier New', Courier, monospace;
+}
+
+.custom-navbar {
+    background: rgba(20, 0, 40, 1);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow: 0 5px 20px rgba(120, 0, 255, 0.15);
+}
+
+.nav-brand {
+    font-size: 20px;
+    color: #ffffff;
+    text-shadow: 0 0 6px rgba(140, 0, 255, 0.7);
+    text-decoration: none;
+    margin-left: 100px;
+}
+
+
+
+.nav-link {
+    color: #cfc3ff !important;
+    transition: 0.3s;
+}
+
+.nav-link:hover {
+    color: #fff !important;
+    text-shadow: 0 0 6px #a855f7;
+}
+
+
+.username {
+    font-weight: 500;
+}
+
+
+.avatar-mini {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 10px rgba(140, 0, 255, 0.6);
+}
+
+
+
+.custom-footer {
+    background: rgba(20, 0, 40, 0.85);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+    color: #dcd6f7;
+    box-shadow: 0 -5px 20px rgba(120, 0, 255, 0.15);
+}
+
+.footer-title {
+    font-size: 14px;
+    color: #ffffff;
+    text-shadow: 0 0 6px rgba(140, 0, 255, 0.7);
+}
+
+.footer-copy {
+    font-size: 11px;
+    opacity: 0.6;
+}

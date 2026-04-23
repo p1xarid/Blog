@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<title>{{ user.username }}'s Post - {{ post.title }}</title>
+<link rel="stylesheet" href="{% static 'posts/post_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="post-detail-wrapper">
+    <div class="post-card">
+        <h1 class="post-title">{{ post.title }}</h1>
+        <div class="post-content">
+            {{ post.content|linebreaks }}
+        </div>
+        <p class="post-meta">
+            By {{ post.author.username }} on {{ post.created_at|date:"F j, Y" }}
+        </p>
+    </div>
+</div>
+{% endblock %}
