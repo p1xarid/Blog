@@ -91,6 +91,10 @@ def portfolio_update(request):
                 update_session_auth_hash(request, request.user)
                 return redirect("portfolio_update")
 
+        elif "delete_account" in request.POST:
+            request.user.delete()
+            return redirect("home")
+
     return render(
         request,
         "profile/portfolio_update.html",

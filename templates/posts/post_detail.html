@@ -4,6 +4,7 @@
 {% block extra_head %}
 <title>{{ user.username }}'s Post - {{ post.title }}</title>
 <link rel="stylesheet" href="{% static 'posts/post_detail.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 {% endblock %}
 
 {% block content %}
@@ -16,6 +17,157 @@
         <p class="post-meta">
             By {{ post.author.username }} on {{ post.created_at|date:"F j, Y" }}
         </p>
+
+        {% if user.is_authenticated and user == post.author %}
+        <div style="margin-top: 20px;">
+            <a href="{% url 'post_edit' post.slug %}" class="btn edit-btn">Edit Post</a>
+        </div>
+        {% endif %}
     </div>
 </div>
+
+<div class="comment-section">
+
+    <h2>Comments ({{ post.comments_count }})</h2>
+
+    {% for comment in post.comments.all %}
+    {% if not comment.parent %}
+
+    <div class="comment-box">
+        <div class="comment-header">
+            <div class="comment-content">
+                <p class="comment-text"><b><a href="{% url 'users_portfolio' comment.author %}"
+                            class="comment-author">{{ comment.author }}</a></b>:{{ comment.text }}</p>
+
+                <span class="comment-date">
+                    {{ comment.created_at|date:"F j, Y" }}
+                </span>
+
+            </div>
+
+            {% if user == comment.author or user == post.author %}
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="comment_id" value="{{ comment.id }}">
+
+                <button type="submit" name="delete_comment" class="comment-delete-btn">
+                    <i class="fa-regular fa-rectangle-xmark"></i>
+                </button>
+            </form>
+            {% endif %}
+
+        </div>
+
+        {% if comment.level < 4 %} <details class="reply-details">
+
+            <summary class="reply-btn">
+                Reply
+            </summary>
+
+            <form method="post" class="reply-form">
+
+                {% csrf_token %}
+
+                <textarea name="text" rows="2" class="form-control" placeholder="Write a reply..."></textarea>
+
+                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+
+                <button type="submit" class="comment-btn">
+                    Send Reply
+                </button>
+
+            </form>
+
+            </details>
+
+            {% endif %}
+            <details class="reply-details">
+
+                <summary class="reply-btn">
+                    Show Replies ({{ comment.replies.count }})
+                </summary>
+                <div class="replies">
+                    {% for reply in comment.replies.all %}
+                    <div class="reply-box">
+                        <div class="comment-header">
+                            <div class="comment-content">
+                                <p class="comment-text"><b><a href="{% url 'users_portfolio' reply.author %}"
+                                            class="comment-author">{{ reply.author }}</a></b>:{{ reply.text }}</p>
+
+                                <span class="comment-date">
+                                    {{ reply.created_at|date:"F j, Y" }}
+                                </span>
+
+                            </div>
+
+                            {% if user == reply.author or user == post.author %}
+
+                            <form method="post">
+
+                                {% csrf_token %}
+
+                                <input type="hidden" name="comment_id" value="{{ reply.id }}">
+
+                                <button type="submit" name="delete_comment" class="comment-delete-btn">
+                                    <i class="fa-regular fa-rectangle-xmark"></i>
+                                </button>
+
+                            </form>
+
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </details>
+    </div>
+
+    {% endif %}
+    {% empty %}
+
+    <p>No comments yet.</p>
+
+    {% endfor %}
+
+    <nav class="navbar navbar-dark">
+        <div class="container-fluid">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarToggleExternalContent">
+
+                <i class="fa-solid fa-comment-dots" style="color: rgb(64, 98, 159);"></i>
+
+            </button>
+
+        </div>
+    </nav>
+
+    <div class="collapse" id="navbarToggleExternalContent">
+        <div class="p-4">
+            {% if user.is_authenticated %}
+
+            <form method="post" class="comment-form">
+
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit" class="comment-btn">
+                    Add Comment
+                </button>
+
+            </form>
+
+            {% else %}
+            <p>Please log in to leave a comment.</p>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+
+
+
 {% endblock %}

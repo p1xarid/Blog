@@ -40,10 +40,16 @@
     <div class="post-card mb-3">
         <h1 class="post-title">{{ post.title }}</h1>
         <p class="post-content">{{ post.content }}</p>
+
+        <div class="post-btn-position">
+            <a href="{% url 'post_edit' post.slug %}" class="btn post-btn ">Edit</a>
+        </div>
+
         <div class="post-meta">
             <span>Published on {{ post.created_at|date:"M d, Y" }}</span>
             <span>Status: {{ post.get_status_display }}</span>
         </div>
+
     </div>
     {% empty %}
     <p class="text-center text-white">No posts yet...</p>

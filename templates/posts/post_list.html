@@ -25,7 +25,8 @@
             <a href="{% url 'post_detail' post.slug %}" class="btn btn-primary ">Read More</a>
 
             <p class="text-muted mt-4 ">Published on {{ post.created_at|date:"F j, Y" }} by <a
-                    href="{% url 'users_portfolio' post.author.username %}">{{ post.author.username }}</a>
+                    href="{% url 'users_portfolio' post.author.username %}"
+                    class="post-author">{{post.author.username}}</a>
             </p>
         </div>
         {% endfor %}

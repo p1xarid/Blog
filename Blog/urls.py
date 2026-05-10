@@ -20,6 +20,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 from Blog import settings
+from posts.views import PostListAPI
 
 
 urlpatterns = [
@@ -28,6 +29,7 @@ urlpatterns = [
     path("portfolio/", include("portfolio.urls")),
     path("posts/", include("posts.urls")),
     path("", include("main.urls")),
+    path("api/posts/", PostListAPI.as_view(), name="post-list-api"),
 ]
 
 if settings.DEBUG:

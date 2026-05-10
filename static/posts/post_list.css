@@ -63,3 +63,15 @@ body {
     font-weight: 550;
     color: #333;
 }
+
+.post-author {
+    color: #2e6694;
+
+    text-decoration: none;
+
+}
+
+.post-author:hover {
+    color: #06090f;
+    font-size: 17px;
+}
