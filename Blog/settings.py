@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-yqg)2*2u4*j=m*m@u(k$o1&0#^2$j2n%i=n42hk&tb6z(yf+mj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["blog-6rtp.onrender.com", "127.0.0.1"]
 
 
 # Application definition
@@ -37,10 +37,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
     "accounts",
     "main",
     "portfolio",
     "posts",
+    "likes",
 ]
 
 MIDDLEWARE = [

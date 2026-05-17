@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from slugify import slugify
+from django.utils import timezone
 import uuid
 
 
@@ -19,9 +20,22 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    published_at = models.DateTimeField(default=timezone.now)
+
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="draft")
 
     def save(self, *args, **kwargs):
+
+        if self.pk:
+            old_post = Post.objects.get(pk=self.pk)
+
+            if old_post.status == "draft" and self.status == "published":
+                self.published_at = timezone.now()
+
+        else:
+            if self.status == "published":
+                self.published_at = timezone.now()
+
         unique_id = str(uuid.uuid4().hex[:8])
         if not self.slug:
             self.slug = slugify(self.title)[:50].rstrip("-") + "-" + unique_id
@@ -29,3 +43,24 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    parent = models.ForeignKey(
+        "self", on_delete=models.CASCADE, null=True, blank=True, related_name="replies"
+    )
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def level(self):
+        level = 0
+        parent = self.parent
+        while parent:
+            level += 1
+            parent = parent.parent
+        return level
+
+    def __str__(self):
+        return f"{self.author} -> {self.post}"

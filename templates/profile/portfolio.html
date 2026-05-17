@@ -5,8 +5,32 @@
 {% block extra_head %}
 <title>Profile {{ user.username }}</title>
 <link rel="stylesheet" href="{% static 'profile/portfolio.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 {% endblock %}
 
 {% block content %}
+<div class="card-body container mt-4 rounded-3 p-4">
+    <h1 class="text-center text-white">Portfolio</h1>
+    <div style="display:flex; align-items:center; gap:30px; margin-top:20px;">
+        <img src="{{ portfolio.avatar_url }}" class="avatar" alt="Avatar">
 
+        <div class="text-white">
+            <h1 class="mb-3">{{ portfolio.user.username }}</h1>
+
+            <p class="mb-2  opacity-50">About Me:</p>
+            <p class="ms-4  opacity-50">
+                {{ portfolio.bio|default:"No bio yet..." }}
+            </p>
+
+            <div class="opacity-75">
+                <i class="fa-regular fa-at"></i> Email: {{ portfolio.user.email|default:"No email" }}
+            </div>
+
+            <div class="mt-2 opacity-75">
+                <i class="fa-regular fa-clock"></i> Joined: {{ portfolio.user.date_joined|date:"M d, Y" }}
+            </div>
+        </div>
+    </div>
+
+</div>
 {% endblock %}

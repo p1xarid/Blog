@@ -45,6 +45,26 @@ body {
 
 }
 
+
+.btn-delete {
+    background-color: #af1a1a8e;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 18px;
+    border-radius: 5px;
+    margin-top: 20px;
+
+    transition: all 0.3s ease;
+}
+
+.btn-delete:hover {
+    background-color: #b12525;
+    color: #000000;
+    transform: translateY(-3px);
+    box-shadow: #180a47 0px 5px 15px;
+}
+
 .btn-back {
     display: block;
     margin: 30px auto;

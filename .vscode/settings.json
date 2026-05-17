@@ -1,0 +1,5 @@
+{
+    "github.copilot.chat.claudeAgent.enabled": false,
+    "github.copilot.chat.backgroundAgent.enabled": false,
+    "chat.disableAIFeatures": false
+}

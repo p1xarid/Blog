@@ -45,6 +45,13 @@
             </button>
     </form>
 
+    <form method="post">
+        {% csrf_token %}
+        <button name="delete_account" class="btn btn-delete " onclick="return confirm('Точно видалити акаунт?')">
+            Delete Account
+        </button>
+    </form>
+
     <a class="btn-back btn" href="{% url 'portfolio_settings' %}">
         Back to Settings
     </a>

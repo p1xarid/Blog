@@ -1,8 +1,8 @@
 body {
     background: radial-gradient(circle at top,
-            #4b0f6a,
-            #1a0b2e 60%,
-            #0b0615);
+            #aa39e2,
+            #53258f 60%,
+            #362161);
     min-height: 100vh;
 }
 
@@ -63,4 +63,29 @@ body {
     font-size: 0.9rem;
     display: flex;
     justify-content: space-between;
+}
+
+
+.post-btn-position {
+    display: flex;
+    justify-content: end;
+}
+
+
+.post-btn {
+    margin-bottom: 20px;
+    background: transparent;
+    color: #aaa;
+    border: 1px solid #555;
+    padding: 4px 12px;
+    font-size: 12px;
+    transition: 0.3s;
+
+}
+
+.post-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(139, 92, 246, 0.5);
+    color: white;
+    border-color: #8b5cf6;
 }
