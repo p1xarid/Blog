@@ -22,12 +22,12 @@ from django.urls import include, path
 from Blog import settings
 from posts.views import PostListAPI
 
-
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("accounts.urls")),
     path("portfolio/", include("portfolio.urls")),
     path("posts/", include("posts.urls")),
+    path("", include("likes.urls")),
     path("", include("main.urls")),
     path("api/posts/", PostListAPI.as_view(), name="post-list-api"),
 ]

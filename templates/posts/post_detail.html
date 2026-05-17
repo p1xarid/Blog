@@ -14,15 +14,38 @@
         <div class="post-content">
             {{ post.content|linebreaks }}
         </div>
-        <p class="post-meta">
-            By {{ post.author.username }} on {{ post.created_at|date:"F j, Y" }}
-        </p>
+        <div class="post-meta">
+            <span>
+                By {{ post.author.username }} on {{ post.published_at|date:"F j, Y" }}
+            </span>
+
+            <form action="{% url 'toggle_post_like' post.slug %}" method="POST">
+                {% csrf_token %}
+
+                <button type="submit" class="like-btn">
+
+                    {% if is_liked %}
+                    <i class="fa-solid fa-heart"></i>
+                    {% else %}
+                    <i class="fa-regular fa-heart"></i>
+                    {% endif %}
+
+                    <span>{{ post.likes.count }}</span>
+
+                </button>
+
+            </form>
+        </div>
 
         {% if user.is_authenticated and user == post.author %}
         <div style="margin-top: 20px;">
             <a href="{% url 'post_edit' post.slug %}" class="btn edit-btn">Edit Post</a>
         </div>
         {% endif %}
+
+
+
+
     </div>
 </div>
 

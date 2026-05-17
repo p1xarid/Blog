@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from slugify import slugify
+from django.utils import timezone
 import uuid
 
 
@@ -19,9 +20,22 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    published_at = models.DateTimeField(default=timezone.now)
+
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="draft")
 
     def save(self, *args, **kwargs):
+
+        if self.pk:
+            old_post = Post.objects.get(pk=self.pk)
+
+            if old_post.status == "draft" and self.status == "published":
+                self.published_at = timezone.now()
+
+        else:
+            if self.status == "published":
+                self.published_at = timezone.now()
+
         unique_id = str(uuid.uuid4().hex[:8])
         if not self.slug:
             self.slug = slugify(self.title)[:50].rstrip("-") + "-" + unique_id

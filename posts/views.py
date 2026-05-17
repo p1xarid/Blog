@@ -62,10 +62,19 @@ def post_detail(request, slug):
 
     comments_count = post.comments.count()
 
+    is_liked = False
+    if request.user.is_authenticated:
+        is_liked = post.likes.filter(id=request.user.id).exists()
+
     return render(
         request,
         "posts/post_detail.html",
-        {"post": post, "form": form, "comment_count": comments_count},
+        {
+            "post": post,
+            "form": form,
+            "comment_count": comments_count,
+            "is_liked": is_liked,
+        },
     )
 
 
@@ -103,7 +112,7 @@ def post_edit(request, slug):
             post.status = request.POST.get("status")
             post.save()
 
-            return redirect("post_detail", slug=post.slug)
+            return redirect("my_portfolio")
 
     else:
         form = PostForm(instance=post)

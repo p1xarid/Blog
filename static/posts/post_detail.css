@@ -33,6 +33,7 @@ body {
 }
 
 .post-title {
+
     font-size: 26px;
     font-weight: 600;
     margin-bottom: 25px;
@@ -40,9 +41,12 @@ body {
 }
 
 .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-size: 14px;
     color: #777;
-    margin-bottom: 20px;
+
 }
 
 .post-content {
@@ -237,4 +241,43 @@ body {
     padding-left: 15px;
     border-left: 2px solid rgba(255, 255, 255, 0.15);
     animation: fadeIn 0.5s ease;
+}
+
+.like-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    background: transparent;
+    border: none;
+
+    cursor: pointer;
+
+    padding: 0;
+
+    font-size: 14px;
+    color: #8b8b8b;
+
+    transition: 0.2s ease;
+}
+
+.like-btn i {
+    font-size: 16px;
+    transition: 0.2s ease;
+}
+
+.like-btn:hover i {
+    color: #ff4d6d;
+}
+
+.like-btn .fa-solid {
+    color: #ff4d6d;
+}
+
+.like-btn .fa-regular {
+    color: #b0b0b0;
+}
+
+.like-btn:hover {
+    transform: translateY(-1px);
 }
