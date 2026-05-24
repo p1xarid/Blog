@@ -28,14 +28,32 @@ def post_detail(request, slug):
     if post.status == "draft" and post.author != request.user:
         raise Http404("Post not found")
 
+    if post.status == "friends":
+        if (
+            not request.user.is_authenticated
+            or request.user not in post.author.portfolio.friends.all()
+        ):
+            raise Http404()
+
     form = CommentForm()
 
     if request.method == "POST":
+        if "delete_post" in request.POST:
+            if request.user == post.author or request.user.is_superuser:
+                post.delete()
+                return redirect("post_list")
+            else:
+                raise Http404("You don't have permission to delete this post")
+
         if "delete_comment" in request.POST:
             comment_id = request.POST.get("comment_id")
             comment = get_object_or_404(Comment, id=comment_id)
 
-            if request.user == comment.author or request.user == post.author:
+            if (
+                request.user == comment.author
+                or request.user == post.author
+                or request.user.is_superuser
+            ):
                 comment.delete()
 
             return redirect("post_detail", slug=slug)
@@ -66,6 +84,10 @@ def post_detail(request, slug):
     if request.user.is_authenticated:
         is_liked = post.likes.filter(id=request.user.id).exists()
 
+    is_disliked = False
+    if request.user.is_authenticated:
+        is_disliked = post.dislikes.filter(id=request.user.id).exists()
+
     return render(
         request,
         "posts/post_detail.html",
@@ -74,6 +96,7 @@ def post_detail(request, slug):
             "form": form,
             "comment_count": comments_count,
             "is_liked": is_liked,
+            "is_disliked": is_disliked,
         },
     )
 
@@ -101,7 +124,7 @@ def post_create(request):
 def post_edit(request, slug):
     post = get_object_or_404(Post, slug=slug)
 
-    if post.author != request.user:
+    if post.author != request.user and not request.user.is_superuser:
         raise Http404("You don't have permission to edit this post")
 
     if request.method == "POST":

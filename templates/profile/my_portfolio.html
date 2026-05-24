@@ -9,50 +9,71 @@
 
 
 {% block content %}
-<div class="card-body container mt-4 rounded-3 p-4">
-    <h1 class="text-center text-white">Portfolio</h1>
-    <div style="display:flex; align-items:center; gap:30px; margin-top:20px;">
-        <img src="{{ portfolio.avatar_url }}" class="avatar" alt="Avatar">
+<div class="container mt-4">
+    <div class="card-body rounded-3 p-4">
+        <h1 class="text-center text-white mb-0">Portfolio</h1>
 
-        <div style="color:white;">
-            <h2>{{ portfolio.user.username }}</h2>
+        <div style="display:flex; align-items:center; gap:30px; margin-top:20px;">
+            <img src="{{ portfolio.avatar_url }}" class="avatar" alt="Avatar">
 
-            <p class="text-white" style="opacity:0.6;">
-                {{ portfolio.bio|default:"No bio yet..." }}
-            </p>
+            <div style="color:white;">
+                <h2>{{ portfolio.user.username }}</h2>
 
-            <div style="opacity:0.8;">
-                <i class="fa-solid fa-envelope"></i> {{ portfolio.user.email|default:"No email" }}
+                <p class="text-white" style="opacity:0.6;">
+                    {{ portfolio.bio|default:"No bio yet..." }}
+                </p>
+
+                <div style="opacity:0.8;">
+                    <i class="fa-solid fa-envelope"></i> {{ portfolio.user.email|default:"No email" }}
+                </div>
+
+                <div style="opacity:0.8;">
+                    <i class="fa-regular fa-calendar-days"></i> Joined: {{ portfolio.user.date_joined|date:"M d,Y" }}
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-bar mt-4 mb-4">
+            <div class="stat-item">
+                <h3>{{ posts_count }}</h3>
+                <p>Posts</p>
             </div>
 
-            <div style="opacity:0.8;">
-                <i class="fa-regular fa-calendar-days"></i> Joined: {{ portfolio.user.date_joined|date:"M d, Y" }}
+            <div class="stat-item">
+                <h3>{{ subscriber_count }}</h3>
+                <p>Subscribers</p>
+            </div>
+
+            <div class="stat-item">
+                <h3>{{ avg_rating|floatformat:"1" }}</h3>
+                <p>Average Rating</p>
             </div>
         </div>
-    </div>
-
-</div>
-
-<h1 class="text-center text-white mt-5">Recent Posts</h1>
-
-<div class=" mt-4">
-    {% for post in posts %}
-    <div class="post-card mb-3">
-        <h1 class="post-title">{{ post.title }}</h1>
-        <p class="post-content">{{ post.content }}</p>
-
-        <div class="post-btn-position">
-            <a href="{% url 'post_edit' post.slug %}" class="btn post-btn ">Edit</a>
-        </div>
-
-        <div class="post-meta">
-            <span>Published on {{ post.published_at|date:"M d, Y" }}</span>
-            <span>Status: {{ post.get_status_display }}</span>
-        </div>
 
     </div>
-    {% empty %}
-    <p class="text-center text-white">No posts yet...</p>
-    {% endfor %}
+
+
+    <h1 class="text-center text-white mt-5">Recent Posts</h1>
+
+    <div class=" mt-4">
+        {% for post in posts %}
+        <div class="post-card mb-3">
+            <h1 class="post-title">{{ post.title }}</h1>
+            <p class="post-content">{{ post.content }}</p>
+
+            <div class="post-btn-position">
+                <a href="{% url 'post_edit' post.slug %}" class="btn post-btn ">Edit</a>
+            </div>
+
+            <div class="post-meta">
+                <span>Published on {{ post.published_at|date:"M d, Y" }}</span>
+                <span>Status: {{ post.get_status_display }}</span>
+            </div>
+
+        </div>
+        {% empty %}
+        <p class="text-center text-white">No posts yet...</p>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

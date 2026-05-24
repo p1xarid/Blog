@@ -14,11 +14,11 @@ class PostLike(models.Model):
         unique_together = ("user", "post")
 
 
-class CommentLike(models.Model):
+class PostDislike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="likes")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="dislikes")
 
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ("user", "comment")
+        unique_together = ("user", "post")

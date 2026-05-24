@@ -70,8 +70,9 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(70, 160, 196, 0.5);
     border-color: #55b3a6;
+    background-color: #86e9c080;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 13px;
 }
 
 .comment-section {
@@ -280,4 +281,65 @@ body {
 
 .like-btn:hover {
     transform: translateY(-1px);
+}
+
+
+.dislike-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    background: transparent;
+    border: none;
+
+    cursor: pointer;
+
+    padding: 0;
+
+    font-size: 14px;
+    color: #8b8b8b;
+
+    transition: 0.2s ease;
+}
+
+.dislike-btn i {
+    font-size: 16px;
+    transition: 0.2s ease;
+}
+
+
+.dislike-btn:hover i {
+    color: #5b8cff;
+}
+
+
+.dislike-btn .fa-solid {
+    color: #4c6fff;
+}
+
+
+.dislike-btn .fa-regular {
+    color: #b0b0b0;
+}
+
+.dislike-btn:hover {
+    transform: translateY(-1px);
+}
+
+
+.delete-btn {
+    border: 1px solid rgb(159, 64, 64);
+    background: rgb(255, 200, 200);
+    color: rgb(159, 64, 64);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.delete-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(159, 64, 64, 0.5);
+    background: rgb(180, 73, 73);
+    border-color: #9f4040;
+    font-weight: 600;
+    font-size: 16px;
 }

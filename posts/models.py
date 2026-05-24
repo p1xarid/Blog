@@ -8,6 +8,7 @@ import uuid
 class Post(models.Model):
     STATUS_CHOICES = (
         ("draft", "Draft"),
+        ("friends", "Friends Only"),
         ("published", "Published"),
     )
 
