@@ -1,0 +1,117 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<title>Friends</title>
+<link rel="stylesheet" href="{% static 'profile/friends.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="friends-container">
+
+        <h1 class="display-4 text-center">Friends</h1>
+        <p class="text-center">Search people and manage connections</p>
+
+        <form method="get" class="search-form mb-4">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search users..."
+                    value="{{ search_query }}">
+                <button type="submit" class="btn btn-primary">
+                    Search
+                </button>
+            </div>
+        </form>
+
+        {% if search_query %}
+        <h5 class="mt-3">Search Results</h5>
+
+        {% if search_results %}
+        {% for result in search_results %}
+        <div class="item">
+            <strong><a class="icon-link icon-link-hover profile-link" style="--bs-link-hover-color-rgb: 165, 180, 252;"
+                    href="{% url 'users_portfolio' result.user.username %}"> {{ result.user.username }} <svg
+                        xmlns="http://www.w3.org/2000/svg" class="bi" viewBox="0 0 16 16" aria-hidden="true">
+                        <path
+                            d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                    </svg>
+                </a>
+            </strong>
+
+            <div class="d-flex gap-2">
+                {% if result.is_friend %}
+                <span class="badge bg-success">Friend</span>
+
+                {% elif result.received_request %}
+                <span class="badge bg-warning">Requested you</span>
+
+                {% elif result.sent_request %}
+                <span class="badge bg-secondary">Pending</span>
+
+                {% else %}
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="username" value="{{ result.user.username }}">
+                    <button type="submit" name="send_request" class="btn btn-primary btn-sm">
+                        Send request
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No users found for "{{ search_query }}"</p>
+        {% endif %}
+        {% endif %}
+
+        {% if incoming_requests %}
+        <h5>Friend Requests</h5>
+
+        {% for request in incoming_requests %}
+        <div class="item">
+            <span>{{ request.from_user.username }}</span>
+
+            <div class="d-flex gap-2">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="request_id" value="{{ request.pk }}">
+                    <button name="accept_request" class="btn btn-success btn-sm">
+                        Accept
+                    </button>
+                </form>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="request_id" value="{{ request.pk }}">
+                    <button name="decline_request" class="btn btn-danger btn-sm">
+                        Decline
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <h5 class="mt-3">Your Friends</h5>
+
+        {% for friend in friends %}
+        <div class="item">
+            <div class="d-flex align-items-center">
+                <img src="{{ friend.portfolio.avatar_url }}" class="avatar">
+                <a class="icon-link icon-link-hover profile-link" style="--bs-link-hover-color-rgb: 165, 180, 252;"
+                    href="{% url 'users_portfolio' friend.username %}"> {{ friend.username }} <svg
+                        xmlns="http://www.w3.org/2000/svg" class="bi" viewBox="0 0 16 16" aria-hidden="true">
+                        <path
+                            d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <p>No friends yet</p>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

@@ -12,6 +12,7 @@
     <div class="hero-card">
         <h1 class="hero-title">
             Welcome{% if user.is_authenticated %}, {{ user.username }}{% endif %}
+            {% if user.is_superuser%}(Admin){%endif%}
         </h1>
         <p class="hero-subtitle">
             Share your thoughts, write interesting content and explore the world of ideas.

@@ -1,0 +1,7 @@
+from django.urls import path
+from .views import toggle_post_dislike, toggle_post_like
+
+urlpatterns = [
+    path("post/<slug:slug>/like/", toggle_post_like, name="toggle_post_like"),
+    path("post/<slug:slug>/dislike/", toggle_post_dislike, name="toggle_post_dislike"),
+]
